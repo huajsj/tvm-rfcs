@@ -104,7 +104,12 @@ print(str(pipe_cfg))
 The interface is mostly the same as the graph executor but accepts a pipeline configuration instead of a Relay module. Here is an example.
 
 ```python
-
+pipe_cfg[subgraph0] = { "target": "llvm", "customized_build_func": None, "device": "cpu(0)",
+}
+pipe_cfg[subgraph1] = { "target": "opencl", "customized_build_func":None, "device": "opencl(0)",
+}
+pipe_cfg[subgraph2] = { "target": arm_cpu('ultra96'), "customized_build_func": vitis_build, "device": "cpu()",
+}
 # Use the config to build a pipeline executor
 with relay.build_config(opt_level=3):
     lib = pipeline_executor.build_pipeline(pipe_cfg)
